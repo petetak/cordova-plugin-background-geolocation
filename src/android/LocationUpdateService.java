@@ -403,12 +403,12 @@ public class LocationUpdateService extends Service implements LocationListener {
         lastLocation = location;
         persistLocation(location);
 
-        if (this.isNetworkConnected()) {
+        /*if (this.isNetworkConnected()) {
             Log.d(TAG, "Scheduling location network post");
             schedulePostLocations();
         } else {
             Log.d(TAG, "Network unavailable, waiting for now");
-        }
+        }*/
     }
     
     /**
@@ -640,7 +640,7 @@ public class LocationUpdateService extends Service implements LocationListener {
         Log.d(TAG, "afterexecute " +  task.getStatus());
     }
 
-    private boolean postLocation(com.tenforwardconsulting.cordova.bgloc.data.Location l) {
+    /*private boolean postLocation(com.tenforwardconsulting.cordova.bgloc.data.Location l) {
         if (l == null) {
             Log.w(TAG, "postLocation: null location");
             return false;
@@ -677,6 +677,7 @@ public class LocationUpdateService extends Service implements LocationListener {
             return false;
         }
     }
+    */
     private void persistLocation(Location location) {
         LocationDAO dao = DAOFactory.createLocationDAO(this.getApplicationContext());
         com.tenforwardconsulting.cordova.bgloc.data.Location savedLocation = com.tenforwardconsulting.cordova.bgloc.data.Location.fromAndroidLocation(location);
@@ -697,6 +698,37 @@ public class LocationUpdateService extends Service implements LocationListener {
             Log.d(TAG, "No active network info");
             return false;
         }
+    }
+
+    public String getDriveJson() {
+
+        LocationDAO locationDAO = DAOFactory.createLocationDAO(LocationUpdateService.this.getApplicationContext());
+        JSONObject drive = new JSONObject();
+
+        try{
+            for (com.tenforwardconsulting.cordova.bgloc.data.Location l : locationDAO.getAllLocations()) {
+                //Log.d(TAG, "saved location lat"+savedLocation.getLatitude()+" date "+savedLocation.getRecordedAt() + " speed "+savedLocation.getSpeed());
+                JSONObject location = new JSONObject();
+                location.put("latitude", l.getLatitude());
+                location.put("longitude", l.getLongitude());
+                location.put("accuracy", l.getAccuracy());
+                location.put("speed", l.getSpeed());
+                location.put("recorded_at", l.getRecordedAt());
+                drive.put("drive", location);
+            }
+        }
+        catch (JSONException jsonException){
+            return jsonException.getMessage();
+        }
+
+        return drive.toString();
+
+    }
+
+    public void deletePreviousDrive() {
+
+        LocationDAO locationDAO = DAOFactory.createLocationDAO(LocationUpdateService.this.getApplicationContext());
+        locationDAO.deleteAllLocations();
     }
 
     @Override

@@ -71,6 +71,15 @@ public class SQLiteLocationDAO implements LocationDAO {
 		db.endTransaction();
 		db.close();
 	}
+
+    public void deleteAllLocations() {
+        SQLiteDatabase db = new LocationOpenHelper(context).getWritableDatabase();
+        db.beginTransaction();
+        db.delete(LocationOpenHelper.LOCATION_TABLE_NAME, "id > ?", new String[]{"-1"});
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        db.close();
+    }
 	
 	private Location hydrate(Cursor c) {
 		Location l = new Location();
