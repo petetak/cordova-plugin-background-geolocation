@@ -10,6 +10,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.util.Log;
+import com.tenforwardconsulting.cordova.bgloc.data.DAOFactory;
+import com.tenforwardconsulting.cordova.bgloc.data.LocationDAO;
 
 public class BackgroundGpsPlugin extends CordovaPlugin {
     private static final String TAG = "BackgroundGpsPlugin";
@@ -18,8 +20,8 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
     public static final String ACTION_STOP = "stop";
     public static final String ACTION_CONFIGURE = "configure";
     public static final String ACTION_SET_CONFIG = "setConfig";
-		public static final String ACTION_GET_ALL_POINTS = "getAllPoints";
-		public static final String ACTION_DELETE_ALL_POINTS = "deleteAllPoints";
+	public static final String ACTION_GET_ALL_POINTS = "getAllPoints";
+	public static final String ACTION_DELETE_ALL_POINTS = "deleteAllPoints";
 
     private Intent updateServiceIntent;
     
@@ -33,6 +35,31 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
     private String locationTimeout = "60";
     private String isDebugging = "false";
     
+    public String getDriveJson() {
+
+        LocationDAO locationDAO = DAOFactory.createLocationDAO(this.getApplicationContext());
+        JSONObject drive = new JSONObject();
+
+        try{
+            for (com.tenforwardconsulting.cordova.bgloc.data.Location l : locationDAO.getAllLocations()) {
+                //Log.d(TAG, "saved location lat"+savedLocation.getLatitude()+" date "+savedLocation.getRecordedAt() + " speed "+savedLocation.getSpeed());
+                JSONObject location = new JSONObject();
+                location.put("latitude", l.getLatitude());
+                location.put("longitude", l.getLongitude());
+                location.put("accuracy", l.getAccuracy());
+                location.put("speed", l.getSpeed());
+                location.put("recorded_at", l.getRecordedAt());
+                drive.put("drive", location);
+            }
+        }
+        catch (JSONException jsonException){
+            return jsonException.getMessage();
+        }
+
+        return drive.toString();
+
+    }
+
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
         Activity activity = this.cordova.getActivity();
         Boolean result = false;
@@ -61,15 +88,15 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
             result = true;
             activity.stopService(updateServiceIntent);
             callbackContext.success();
-				}
-				else if (ACTION_GET_ALL_POINTS.equalsIgnoreCase(action)) {
+		}
+		else if (ACTION_GET_ALL_POINTS.equalsIgnoreCase(action)) {
             result = true;
-            activity.getAllPointsService(updateServiceIntent);
-            callbackContext.success("ok got points");
+            updateServiceIntent.setType();
+            callbackContext.success();
         }
-				else if (ACTION_DELETE_ALL_POINTS.equalsIgnoreCase(action)) {
+		else if (ACTION_DELETE_ALL_POINTS.equalsIgnoreCase(action)) {
            	result = true;
-            activity.deleteAllPointsService(updateServiceIntent);
+            //activity.deleteAllPointsService(updateServiceIntent);
             callbackContext.success();
         } else if (ACTION_CONFIGURE.equalsIgnoreCase(action)) {
             result = true;
