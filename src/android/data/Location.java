@@ -69,18 +69,8 @@ public class Location {
       df.setTimeZone( tz );
 
       String output = df.format( date );
-
-      int inset0 = 9;
-      int inset1 = 8;
       
-      String s0 = output.substring( 0, output.length() - inset0 );
-      String s1 = output.substring( output.length() - inset1, output.length() );
-
-      String result = s0 + s1;
-
-      result = result.replaceAll( "UTC", "+00:00" );
-      
-      return result;
+      return output;
       
   }
 	
