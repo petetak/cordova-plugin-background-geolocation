@@ -774,9 +774,9 @@ public class LocationUpdateService extends Service implements LocationListener {
             LocationDAO locationDAO = DAOFactory.createLocationDAO(LocationUpdateService.this.getApplicationContext());
             for (com.tenforwardconsulting.cordova.bgloc.data.Location savedLocation : locationDAO.getAllLocations()) {
                 Log.d(TAG, "Posting saved location");
-                if (postLocation(savedLocation)) {
-                    locationDAO.deleteLocation(savedLocation);
-                }
+                //if (postLocation(savedLocation)) {
+                  //  locationDAO.deleteLocation(savedLocation);
+                //}
             }
             return true;
         }

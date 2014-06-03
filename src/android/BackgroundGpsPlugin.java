@@ -93,8 +93,8 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
 		}
 		else if (ACTION_GET_ALL_POINTS.equalsIgnoreCase(action)) {
             result = true;
-            updateServiceIntent.setType();
-            callbackContext.success();
+            String res = getDriveJson();
+            callbackContext.success(res);
         }
 		else if (ACTION_DELETE_ALL_POINTS.equalsIgnoreCase(action)) {
            	result = true;
