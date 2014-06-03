@@ -12,6 +12,8 @@ import android.location.LocationManager;
 import android.util.Log;
 import com.tenforwardconsulting.cordova.bgloc.data.DAOFactory;
 import com.tenforwardconsulting.cordova.bgloc.data.LocationDAO;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class BackgroundGpsPlugin extends CordovaPlugin {
     private static final String TAG = "BackgroundGpsPlugin";
@@ -37,7 +39,7 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
     
     public String getDriveJson() {
 
-        LocationDAO locationDAO = DAOFactory.createLocationDAO(this.getApplicationContext());
+        LocationDAO locationDAO = DAOFactory.createLocationDAO(this.cordova.getActivity().getApplicationContext());
         JSONObject drive = new JSONObject();
 
         try{
