@@ -62,7 +62,7 @@ public class Location {
 
 	public static String toISOString( Date date ) {
         
-      SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ssz" );
+      SimpleDateFormat df = new SimpleDateFormat( "yyyy-MM-dd'T'HH:mm:ss'Z'" );
       
       TimeZone tz = TimeZone.getTimeZone( "UTC" );
       
