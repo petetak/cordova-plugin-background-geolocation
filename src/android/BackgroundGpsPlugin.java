@@ -50,6 +50,13 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
                 location.put("latitude", l.getLatitude());
                 location.put("longitude", l.getLongitude());
                 location.put("speed", l.getSpeed());
+                location.put("altitude", "-1");
+                
+                JSONObject accuracy = new JSONObject();
+                accuracy.put("horizontal", "-1");
+                accuracy.put("vertical", "-1");
+                location.put("accuracy", accuracy);
+
                 location.put("timestamp", l.getISORecordedAt());
                 jsonArray.put(location);
                 

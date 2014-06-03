@@ -50,6 +50,10 @@ public class Location {
 		this.accuracy = accuracy;
 	}
 	public String getSpeed() {
+		
+		// to give similar output to ios
+		if(speed.equals("0.0"))
+			return "-1";
 		return speed;
 	}
 	public void setSpeed(String speed) {
