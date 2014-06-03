@@ -155,20 +155,10 @@ public class LocationUpdateService extends Service implements LocationListener {
         criteria.setCostAllowed(true);
     }
 
-    public void deletePreviousDrive() {
-
-        LocationDAO locationDAO = DAOFactory.createLocationDAO(this.getApplicationContext());
-        locationDAO.deleteAllLocations();
-    }
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.i(TAG, "Received start id " + startId + ": " + intent);
         if (intent != null) { 
-            
-            // first delete previous drive
-            deletePreviousDrive();
-            
             try {
                 params = new JSONObject(intent.getStringExtra("params"));
             } catch (JSONException e) {
