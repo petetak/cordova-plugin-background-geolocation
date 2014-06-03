@@ -14,9 +14,7 @@ import com.tenforwardconsulting.cordova.bgloc.data.DAOFactory;
 import com.tenforwardconsulting.cordova.bgloc.data.LocationDAO;
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
+
 
 public class BackgroundGpsPlugin extends CordovaPlugin {
     private static final String TAG = "BackgroundGpsPlugin";

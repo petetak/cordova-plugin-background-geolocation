@@ -3,6 +3,8 @@ package com.tenforwardconsulting.cordova.bgloc.data;
 import java.util.Date;
 
 import android.os.SystemClock;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 
 public class Location {
