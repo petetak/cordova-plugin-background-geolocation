@@ -41,7 +41,7 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
 
         LocationDAO locationDAO = DAOFactory.createLocationDAO(this.cordova.getActivity().getApplicationContext());
         JSONObject drive = new JSONObject();
-
+        JSONArray jsonArray = new JSONArray();
         try{
             for (com.tenforwardconsulting.cordova.bgloc.data.Location l : locationDAO.getAllLocations()) {
                 //Log.d(TAG, "saved location lat"+savedLocation.getLatitude()+" date "+savedLocation.getRecordedAt() + " speed "+savedLocation.getSpeed());
@@ -51,8 +51,10 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
                 location.put("accuracy", l.getAccuracy());
                 location.put("speed", l.getSpeed());
                 location.put("recorded_at", l.getRecordedAt());
-                drive.put("drive", location);
+                jsonArray.add(location);
+                
             }
+            drive.put("drive", jsonArray);
         }
         catch (JSONException jsonException){
             return jsonException.getMessage();
@@ -60,6 +62,12 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
 
         return drive.toString();
 
+    }
+
+    public void deletePreviousDrive() {
+
+        LocationDAO locationDAO = DAOFactory.createLocationDAO(this.cordova.getActivity().getApplicationContext());
+        locationDAO.deleteAllLocations();
     }
 
     public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
@@ -93,8 +101,10 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
 		}
 		else if (ACTION_GET_ALL_POINTS.equalsIgnoreCase(action)) {
             result = true;
-            String res = getDriveJson();
-            callbackContext.success(res);
+            this.cordova.getThreadPool().execute(new Runnable() {
+                String res = getDriveJson();
+                callbackContext.success(res);
+            }
         }
 		else if (ACTION_DELETE_ALL_POINTS.equalsIgnoreCase(action)) {
            	result = true;
