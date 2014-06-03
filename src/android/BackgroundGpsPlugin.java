@@ -117,8 +117,12 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
         }
 		else if (ACTION_DELETE_ALL_POINTS.equalsIgnoreCase(action)) {
            	result = true;
-            //activity.deleteAllPointsService(updateServiceIntent);
-            callbackContext.success();
+            this.cordova.getThreadPool().execute(new Runnable() {
+                public void run() {
+                    deletePreviousDrive();
+                    callbackContext.success();
+                }
+            });
         } else if (ACTION_CONFIGURE.equalsIgnoreCase(action)) {
             result = true;
             try {
