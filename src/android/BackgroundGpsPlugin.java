@@ -51,7 +51,7 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
                 location.put("accuracy", l.getAccuracy());
                 location.put("speed", l.getSpeed());
                 location.put("recorded_at", l.getRecordedAt());
-                jsonArray.add(location);
+                jsonArray.put(location);
                 
             }
             drive.put("drive", jsonArray);
@@ -70,7 +70,7 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
         locationDAO.deleteAllLocations();
     }
 
-    public boolean execute(String action, JSONArray data, CallbackContext callbackContext) {
+    public boolean execute(String action, JSONArray data, final CallbackContext callbackContext) {
         Activity activity = this.cordova.getActivity();
         Boolean result = false;
         updateServiceIntent = new Intent(activity, LocationUpdateService.class);
