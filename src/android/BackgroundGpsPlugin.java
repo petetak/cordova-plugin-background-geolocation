@@ -71,12 +71,6 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
 
     }
 
-    public void deletePreviousDrive() {
-
-        LocationDAO locationDAO = DAOFactory.createLocationDAO(this.cordova.getActivity().getApplicationContext());
-        locationDAO.deleteAllLocations();
-    }
-
     public boolean execute(String action, JSONArray data, final CallbackContext callbackContext) {
         Activity activity = this.cordova.getActivity();
         Boolean result = false;

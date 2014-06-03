@@ -50,13 +50,6 @@ module.exports = {
             'getAllPoints',
             []);   
     },
-	deleteAllPoints: function(success, failure) {
-        exec(success || function() {},
-            failure || function() {},
-            'BackgroundGeoLocation',
-            'deleteAllPoints',
-            []);   
-    },
     /**
     * @param {Integer} stationaryRadius
     * @param {Integer} desiredAccuracy
