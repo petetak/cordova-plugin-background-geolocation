@@ -48,13 +48,12 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
                 JSONObject location = new JSONObject();
                 location.put("latitude", l.getLatitude());
                 location.put("longitude", l.getLongitude());
-                location.put("accuracy", l.getAccuracy());
                 location.put("speed", l.getSpeed());
-                location.put("recorded_at", l.getRecordedAt());
+                location.put("timestamp", l.getISORecordedAt());
                 jsonArray.put(location);
                 
             }
-            drive.put("drive", jsonArray);
+            drive.put("locations", jsonArray);
         }
         catch (JSONException jsonException){
             return jsonException.getMessage();
