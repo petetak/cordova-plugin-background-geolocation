@@ -104,7 +104,7 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
             this.cordova.getThreadPool().execute(new Runnable() {
                 String res = getDriveJson();
                 callbackContext.success(res);
-            }
+            });
         }
 		else if (ACTION_DELETE_ALL_POINTS.equalsIgnoreCase(action)) {
            	result = true;
