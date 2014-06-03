@@ -18,6 +18,8 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
     public static final String ACTION_STOP = "stop";
     public static final String ACTION_CONFIGURE = "configure";
     public static final String ACTION_SET_CONFIG = "setConfig";
+		public static final String ACTION_GET_ALL_POINTS = "getAllPoints";
+		public static final String ACTION_DELETE_ALL_POINTS = "deleteAllPoints";
 
     private Intent updateServiceIntent;
     
@@ -58,6 +60,16 @@ public class BackgroundGpsPlugin extends CordovaPlugin {
             isEnabled = false;
             result = true;
             activity.stopService(updateServiceIntent);
+            callbackContext.success();
+				}
+				else if (ACTION_GET_ALL_POINTS.equalsIgnoreCase(action)) {
+            result = true;
+            activity.getAllPointsService(updateServiceIntent);
+            callbackContext.success("ok got points");
+        }
+				else if (ACTION_DELETE_ALL_POINTS.equalsIgnoreCase(action)) {
+           	result = true;
+            activity.deleteAllPointsService(updateServiceIntent);
             callbackContext.success();
         } else if (ACTION_CONFIGURE.equalsIgnoreCase(action)) {
             result = true;
