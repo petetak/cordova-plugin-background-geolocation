@@ -3,10 +3,10 @@ module.exports = {
     configure: function(success, failure, config) {
         var params              = JSON.stringify(config.params || {}),
             url                 = config.url        || 'BackgroundGeoLocation_url',
-            stationaryRadius    = (config.stationaryRadius >= 0) ? config.stationaryRadius : 50,    // meters
-            distanceFilter      = (config.distanceFilter >= 0) ? config.distanceFilter : 500,       // meters
-            locationTimeout     = (config.locationTimeout >= 0) ? config.locationTimeout : 60,      // seconds
-            desiredAccuracy     = (config.desiredAccuracy >= 0) ? config.desiredAccuracy : 100;     // meters
+            stationaryRadius    = (config.stationaryRadius >= 0) ? config.stationaryRadius : 10,    // meters
+            distanceFilter      = (config.distanceFilter >= 0) ? config.distanceFilter : 40,       // meters
+            locationTimeout     = (config.locationTimeout >= 0) ? config.locationTimeout : 30,      // seconds
+            desiredAccuracy     = (config.desiredAccuracy >= 0) ? config.desiredAccuracy : 10;     // meters
             debug               = config.debug || false;
 
         exec(success || function() {},
