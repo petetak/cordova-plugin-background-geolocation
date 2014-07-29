@@ -85,10 +85,10 @@ public class LocationUpdateService extends Service implements LocationListener {
     private Boolean isAcquiringSpeed = false;
     private Integer locationAcquisitionAttempts = 0;
     
-    private Integer desiredAccuracy = 100;
-    private Integer distanceFilter = 30;
+    private Integer desiredAccuracy = 1;
+    private Integer distanceFilter = 1;
     private Integer scaledDistanceFilter;
-    private Integer locationTimeout = 30;
+    private Integer locationTimeout = 1;
     private Boolean isDebugging;
 
     private ToneGenerator toneGenerator;
@@ -444,7 +444,8 @@ public class LocationUpdateService extends Service implements LocationListener {
         Double newDistanceFilter = (double) distanceFilter;
         if (speed < 100) {
             float roundedDistanceFilter = (round(speed / 5) * 5);
-            newDistanceFilter = pow(roundedDistanceFilter, 2) + (double) distanceFilter;
+            //newDistanceFilter = pow(roundedDistanceFilter, 2) + (double) distanceFilter;
+                    newDistanceFilter = roundedDistanceFilter + (double) distanceFilter;
         }
         return (newDistanceFilter.intValue() < 1000) ? newDistanceFilter.intValue() : 1000;
     }
@@ -483,7 +484,7 @@ public class LocationUpdateService extends Service implements LocationListener {
         if (isDebugging) {
             startTone("beep");
         }
-	float distance = abs(location.distanceTo(stationaryLocation) - stationaryLocation.getAccuracy() - location.getAccuracy());
+    float distance = abs(location.distanceTo(stationaryLocation) - stationaryLocation.getAccuracy() - location.getAccuracy());
         
         if (isDebugging) {
             Toast.makeText(this, "Stationary exit in " + (stationaryRadius-distance) + "m", Toast.LENGTH_LONG).show();
