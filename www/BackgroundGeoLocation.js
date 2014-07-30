@@ -4,9 +4,9 @@ module.exports = {
         var params              = JSON.stringify(config.params || {}),
             url                 = config.url        || 'BackgroundGeoLocation_url',
             stationaryRadius    = (config.stationaryRadius >= 0) ? config.stationaryRadius : 10,    // meters
-            distanceFilter      = (config.distanceFilter >= 0) ? config.distanceFilter : 40,       // meters
-            locationTimeout     = (config.locationTimeout >= 0) ? config.locationTimeout : 30,      // seconds
-            desiredAccuracy     = (config.desiredAccuracy >= 0) ? config.desiredAccuracy : 10;     // meters
+            distanceFilter      = (config.distanceFilter >= 0) ? config.distanceFilter : 10,       // meters
+            locationTimeout     = (config.locationTimeout >= 0) ? config.locationTimeout : 10,      // seconds
+            desiredAccuracy     = (config.desiredAccuracy >= 0) ? config.desiredAccuracy : 5;     // meters
             debug               = config.debug || false;
 
         exec(success || function() {},
